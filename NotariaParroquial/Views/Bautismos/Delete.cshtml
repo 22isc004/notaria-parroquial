@@ -1,0 +1,39 @@
+@model NotariaParroquial.Models.Bautismo
+@{
+    ViewData["Title"] = "Eliminar Bautismo";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="text-danger"><i class="bi bi-trash"></i> Eliminar Bautismo</h2>
+    <a asp-action="Index" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i> Volver
+    </a>
+</div>
+
+<div class="card border-danger">
+    <div class="card-header bg-danger text-white">
+        <i class="bi bi-exclamation-triangle"></i> Confirmar Eliminación
+    </div>
+    <div class="card-body">
+        <p class="text-danger fw-semibold">¿Está seguro de eliminar este registro? Esta acción no se puede deshacer.</p>
+        <dl class="row">
+            <dt class="col-sm-3">Nombre:</dt>
+            <dd class="col-sm-9">@Model.NombreCompleto</dd>
+            <dt class="col-sm-3">Fecha de Bautismo:</dt>
+            <dd class="col-sm-9">@Model.FechaBautismo.ToString("dd/MM/yyyy")</dd>
+            <dt class="col-sm-3">Padre:</dt>
+            <dd class="col-sm-9">@(Model.NombrePadre ?? "-")</dd>
+            <dt class="col-sm-3">Madre:</dt>
+            <dd class="col-sm-9">@(Model.NombreMadre ?? "-")</dd>
+        </dl>
+        <form asp-action="Delete" method="post">
+            <input type="hidden" asp-for="Id" />
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-danger">
+                    <i class="bi bi-trash"></i> Sí, Eliminar
+                </button>
+                <a asp-action="Index" class="btn btn-outline-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>

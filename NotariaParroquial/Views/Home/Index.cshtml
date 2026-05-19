@@ -1,0 +1,111 @@
+﻿@{
+    ViewData["Title"] = "Panel de Control";
+}
+
+<h2 class="mb-4"><i class="bi bi-speedometer2"></i> Panel de Control</h2>
+
+<div class="row g-4 mb-4">
+    <div class="col-md-4">
+        <div class="card stat-card" style="border-left: 4px solid #6f42c1;">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <p class="text-muted mb-1">Total Bautismos</p>
+                        <h2 class="fw-bold" style="color:#6f42c1;">@ViewData["TotalBautismos"]</h2>
+                        <small class="text-muted">Este año: @ViewData["BautismosAnio"]</small>
+                    </div>
+                    <i class="bi bi-droplet fs-1" style="color:#6f42c1; opacity:0.3;"></i>
+                </div>
+                <a asp-controller="Bautismos" asp-action="Index" class="btn btn-sm btn-outline-primary mt-2">
+                    Ver todos <i class="bi bi-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card stat-card" style="border-left: 4px solid #e91e8c;">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <p class="text-muted mb-1">Total Matrimonios</p>
+                        <h2 class="fw-bold" style="color:#e91e8c;">@ViewData["TotalMatrimonios"]</h2>
+                        <small class="text-muted">Este año: @ViewData["MatrimoniosAnio"]</small>
+                    </div>
+                    <i class="bi bi-heart fs-1" style="color:#e91e8c; opacity:0.3;"></i>
+                </div>
+                <a asp-controller="Matrimonios" asp-action="Index" class="btn btn-sm btn-outline-danger mt-2">
+                    Ver todos <i class="bi bi-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card stat-card" style="border-left: 4px solid #f59e0b;">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <p class="text-muted mb-1">Total Confirmaciones</p>
+                        <h2 class="fw-bold text-warning">@ViewData["TotalConfirmaciones"]</h2>
+                    </div>
+                    <i class="bi bi-star fs-1 text-warning" style="opacity:0.3;"></i>
+                </div>
+                <a asp-controller="Confirmaciones" asp-action="Index" class="btn btn-sm btn-outline-warning mt-2">
+                    Ver todos <i class="bi bi-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header fw-semibold" style="background:#f0e6ff; color:#4a2c6d;">
+                <i class="bi bi-lightning"></i> Acciones Rápidas
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a asp-controller="Bautismos" asp-action="Create" class="btn btn-outline-primary">
+                        <i class="bi bi-plus-circle"></i> Registrar Bautismo
+                    </a>
+                    <a asp-controller="Matrimonios" asp-action="Create" class="btn btn-outline-danger">
+                        <i class="bi bi-plus-circle"></i> Registrar Matrimonio
+                    </a>
+                    <a asp-controller="Confirmaciones" asp-action="Create" class="btn btn-outline-warning">
+                        <i class="bi bi-plus-circle"></i> Registrar Confirmación
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header fw-semibold bg-secondary text-white">
+                <i class="bi bi-info-circle"></i> Sesión Actual
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Usuario</span>
+                        <span class="badge bg-primary">@User.Identity?.Name</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Rol</span>
+                        @if (User.IsInRole("Parroco"))
+                        {
+                            <span class="badge" style="background-color:#6f42c1;">Párroco</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary">Secretaria</span>
+                        }
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Fecha</span>
+                        <span>@DateTime.Now.ToString("dd/MM/yyyy")</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

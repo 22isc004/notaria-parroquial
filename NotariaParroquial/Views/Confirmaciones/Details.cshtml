@@ -1,0 +1,54 @@
+@model NotariaParroquial.Models.Confirmacion
+@{
+    ViewData["Title"] = "Detalle de Confirmación";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-star"></i> Detalle de Confirmación</h2>
+    <div class="d-flex gap-2">
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-warning"><i class="bi bi-pencil"></i> Editar</a>
+        <a asp-action="Index" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Volver</a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" style="background:#f0e6ff; color:#4a2c6d;">
+        <strong>@Model.NombreCompleto</strong> — Confirmado el @Model.FechaConfirmacion.ToString("dd/MM/yyyy")
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <table class="table table-sm">
+                    <tr><th>Nombre:</th><td>@Model.NombreConfirmado</td></tr>
+                    <tr><th>Apellido Paterno:</th><td>@Model.ApellidoPaterno</td></tr>
+                    <tr><th>Apellido Materno:</th><td>@(Model.ApellidoMaterno ?? "-")</td></tr>
+                    <tr><th>Fecha:</th><td>@Model.FechaConfirmacion.ToString("dd/MM/yyyy")</td></tr>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <table class="table table-sm">
+                    <tr><th>Padre:</th><td>@(Model.NombrePadre ?? "-")</td></tr>
+                    <tr><th>Madre:</th><td>@(Model.NombreMadre ?? "-")</td></tr>
+                    <tr><th>Padrino/Madrina:</th><td>@(Model.Padrino ?? "-")</td></tr>
+                    <tr><th>Ministro:</th><td>@(Model.Ministro ?? "-")</td></tr>
+                    <tr><th>Obispo:</th><td>@(Model.Obispo ?? "-")</td></tr>
+                </table>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-md-6">
+                <table class="table table-sm">
+                    <tr><th>Libro:</th><td>@(Model.Libro ?? "-")</td></tr>
+                    <tr><th>Folio:</th><td>@(Model.Folio ?? "-")</td></tr>
+                    <tr><th>Acta:</th><td>@(Model.Acta ?? "-")</td></tr>
+                </table>
+            </div>
+        </div>
+        @if (Model.Observaciones != null)
+        {
+            <p><strong>Observaciones:</strong> @Model.Observaciones</p>
+        }
+        <small class="text-muted">Registrado: @Model.FechaRegistro.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</small>
+    </div>
+</div>

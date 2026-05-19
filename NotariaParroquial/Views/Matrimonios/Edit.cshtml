@@ -1,0 +1,97 @@
+@model NotariaParroquial.Models.Matrimonio
+@{
+    ViewData["Title"] = "Editar Matrimonio";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-pencil"></i> Editar Matrimonio</h2>
+    <a asp-action="Index" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Volver</a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <form asp-action="Edit" method="post">
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="FechaRegistro" />
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="FechaMatrimonio" class="form-label fw-semibold"></label>
+                    <input asp-for="FechaMatrimonio" class="form-control" type="date" />
+                    <span asp-validation-for="FechaMatrimonio" class="text-danger small"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Ministro" class="form-label fw-semibold"></label>
+                    <input asp-for="Ministro" class="form-control" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="NombreNovio" class="form-label fw-semibold"></label>
+                    <input asp-for="NombreNovio" class="form-control" />
+                    <span asp-validation-for="NombreNovio" class="text-danger small"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="NombreNovia" class="form-label fw-semibold"></label>
+                    <input asp-for="NombreNovia" class="form-control" />
+                    <span asp-validation-for="NombreNovia" class="text-danger small"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                    <label asp-for="PadreNovio" class="form-label fw-semibold"></label>
+                    <input asp-for="PadreNovio" class="form-control" />
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label asp-for="MadreNovio" class="form-label fw-semibold"></label>
+                    <input asp-for="MadreNovio" class="form-control" />
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label asp-for="PadreNovia" class="form-label fw-semibold"></label>
+                    <input asp-for="PadreNovia" class="form-control" />
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label asp-for="MadreNovia" class="form-label fw-semibold"></label>
+                    <input asp-for="MadreNovia" class="form-control" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Testigo1" class="form-label fw-semibold"></label>
+                    <input asp-for="Testigo1" class="form-control" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Testigo2" class="form-label fw-semibold"></label>
+                    <input asp-for="Testigo2" class="form-control" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label asp-for="Libro" class="form-label fw-semibold"></label>
+                    <input asp-for="Libro" class="form-control" />
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label asp-for="Folio" class="form-label fw-semibold"></label>
+                    <input asp-for="Folio" class="form-control" />
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label asp-for="Acta" class="form-label fw-semibold"></label>
+                    <input asp-for="Acta" class="form-control" />
+                </div>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Observaciones" class="form-label fw-semibold"></label>
+                <textarea asp-for="Observaciones" class="form-control" rows="3"></textarea>
+            </div>
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-warning"><i class="bi bi-save"></i> Actualizar</button>
+                <a asp-action="Index" class="btn btn-outline-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

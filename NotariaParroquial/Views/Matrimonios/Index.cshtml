@@ -1,0 +1,87 @@
+@model IEnumerable<NotariaParroquial.Models.Matrimonio>
+@{
+    ViewData["Title"] = "Matrimonios";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-heart"></i> Registro de Matrimonios</h2>
+    <a asp-action="Create" class="btn btn-primary">
+        <i class="bi bi-plus-circle"></i> Nuevo Matrimonio
+    </a>
+</div>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <form method="get" class="row g-2 align-items-center">
+            <div class="col-md-8">
+                <input type="text" name="buscar" value="@ViewData["Buscar"]" class="form-control"
+                       placeholder="Buscar por nombre del novio o novia..." />
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-outline-primary w-100">
+                    <i class="bi bi-search"></i> Buscar
+                </button>
+            </div>
+            <div class="col-md-2">
+                <a asp-action="Index" class="btn btn-outline-secondary w-100">Limpiar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th>Novio</th>
+                        <th>Novia</th>
+                        <th>Fecha</th>
+                        <th>Ministro</th>
+                        <th>Libro/Folio</th>
+                        <th class="text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center text-muted py-4">
+                                <i class="bi bi-inbox fs-3 d-block"></i>
+                                No hay matrimonios registrados.
+                            </td>
+                        </tr>
+                    }
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="fw-semibold">@item.NombreNovio</td>
+                            <td class="fw-semibold">@item.NombreNovia</td>
+                            <td>@item.FechaMatrimonio.ToString("dd/MM/yyyy")</td>
+                            <td>@(item.Ministro ?? "-")</td>
+                            <td>
+                                @if (item.Libro != null) { <span class="badge bg-secondary">L:@item.Libro F:@item.Folio</span> }
+                            </td>
+                            <td class="text-center">
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-info">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-warning">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                @if (User.IsInRole("Parroco"))
+                                {
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<p class="text-muted mt-2 small">Total: @Model.Count() registros</p>

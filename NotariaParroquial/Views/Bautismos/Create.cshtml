@@ -1,0 +1,112 @@
+@model NotariaParroquial.Models.Bautismo
+@{
+    ViewData["Title"] = "Registrar Bautismo";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-droplet-plus"></i> Registrar Bautismo</h2>
+    <a asp-action="Index" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i> Volver
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+            <h6 class="text-muted fw-bold mb-3">DATOS DEL BAUTIZADO</h6>
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label asp-for="NombreBautizado" class="form-label fw-semibold"></label>
+                    <input asp-for="NombreBautizado" class="form-control" />
+                    <span asp-validation-for="NombreBautizado" class="text-danger small"></span>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label asp-for="ApellidoPaterno" class="form-label fw-semibold"></label>
+                    <input asp-for="ApellidoPaterno" class="form-control" />
+                    <span asp-validation-for="ApellidoPaterno" class="text-danger small"></span>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label asp-for="ApellidoMaterno" class="form-label fw-semibold"></label>
+                    <input asp-for="ApellidoMaterno" class="form-control" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label asp-for="FechaBautismo" class="form-label fw-semibold"></label>
+                    <input asp-for="FechaBautismo" class="form-control" type="date" />
+                    <span asp-validation-for="FechaBautismo" class="text-danger small"></span>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label asp-for="FechaNacimiento" class="form-label fw-semibold"></label>
+                    <input asp-for="FechaNacimiento" class="form-control" type="date" />
+                </div>
+            </div>
+
+            <hr />
+            <h6 class="text-muted fw-bold mb-3">DATOS DE LOS PADRES</h6>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="NombrePadre" class="form-label fw-semibold"></label>
+                    <input asp-for="NombrePadre" class="form-control" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="NombreMadre" class="form-label fw-semibold"></label>
+                    <input asp-for="NombreMadre" class="form-control" />
+                </div>
+            </div>
+
+            <hr />
+            <h6 class="text-muted fw-bold mb-3">PADRINOS Y MINISTRO</h6>
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label asp-for="Padrino" class="form-label fw-semibold"></label>
+                    <input asp-for="Padrino" class="form-control" />
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label asp-for="Madrina" class="form-label fw-semibold"></label>
+                    <input asp-for="Madrina" class="form-control" />
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label asp-for="Ministro" class="form-label fw-semibold"></label>
+                    <input asp-for="Ministro" class="form-control" />
+                </div>
+            </div>
+
+            <hr />
+            <h6 class="text-muted fw-bold mb-3">DATOS DEL LIBRO</h6>
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label asp-for="Libro" class="form-label fw-semibold"></label>
+                    <input asp-for="Libro" class="form-control" />
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label asp-for="Folio" class="form-label fw-semibold"></label>
+                    <input asp-for="Folio" class="form-control" />
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label asp-for="Acta" class="form-label fw-semibold"></label>
+                    <input asp-for="Acta" class="form-control" />
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Observaciones" class="form-label fw-semibold"></label>
+                <textarea asp-for="Observaciones" class="form-control" rows="3"></textarea>
+            </div>
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-save"></i> Guardar Registro
+                </button>
+                <a asp-action="Index" class="btn btn-outline-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
