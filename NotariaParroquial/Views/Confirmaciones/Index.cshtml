@@ -4,19 +4,28 @@
 }
 
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2><i class="bi bi-star"></i> Registro de Confirmaciones</h2>
-    <a asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-circle"></i> Nueva Confirmación</a>
+    <h2 class="page-title"><i class="bi bi-star me-2" style="color:var(--amber);"></i>Confirmaciones</h2>
+    <a asp-action="Create" class="btn btn-primary">
+        <i class="bi bi-plus-circle me-1"></i> Nueva Confirmación
+    </a>
 </div>
 
-<div class="card mb-3">
-    <div class="card-body">
+<!-- Barra de búsqueda -->
+<div class="card search-bar-card mb-3">
+    <div class="card-body py-3">
         <form method="get" class="row g-2 align-items-center">
             <div class="col-md-8">
-                <input type="text" name="buscar" value="@ViewData["Buscar"]" class="form-control"
-                       placeholder="Buscar por nombre o apellido..." />
+                <div class="input-group">
+                    <span class="input-group-text" style="background:#fef3cd; border-color:rgba(245,158,11,0.20); border-radius:9px 0 0 9px;">
+                        <i class="bi bi-search" style="color:var(--amber);"></i>
+                    </span>
+                    <input type="text" name="buscar" value="@ViewData["Buscar"]" class="form-control"
+                           placeholder="Buscar por nombre o apellido..."
+                           style="border-left:none; border-radius:0 9px 9px 0;" />
+                </div>
             </div>
             <div class="col-md-2">
-                <button type="submit" class="btn btn-outline-primary w-100"><i class="bi bi-search"></i> Buscar</button>
+                <button type="submit" class="btn btn-primary w-100">Buscar</button>
             </div>
             <div class="col-md-2">
                 <a asp-action="Index" class="btn btn-outline-secondary w-100">Limpiar</a>
@@ -25,17 +34,19 @@
     </div>
 </div>
 
+<!-- Tabla -->
 <div class="card">
     <div class="card-body p-0">
         <div class="table-responsive">
-            <table class="table table-hover mb-0">
+            <table class="table table-modern mb-0">
                 <thead>
                     <tr>
+                        <th>#</th>
                         <th>Nombre Completo</th>
                         <th>Fecha</th>
-                        <th>Padrino/Madrina</th>
+                        <th>Padrino / Madrina</th>
                         <th>Obispo</th>
-                        <th>Libro/Folio</th>
+                        <th>Libro / Folio</th>
                         <th class="text-center">Acciones</th>
                     </tr>
                 </thead>
@@ -43,35 +54,54 @@
                     @if (!Model.Any())
                     {
                         <tr>
-                            <td colspan="6" class="text-center text-muted py-4">
-                                <i class="bi bi-inbox fs-3 d-block"></i>
-                                No hay confirmaciones registradas.
+                            <td colspan="7">
+                                <div class="empty-state">
+                                    <i class="bi bi-star"></i>
+                                    <p>No hay confirmaciones registradas@(ViewData["Buscar"] != null ? " con ese criterio" : "").</p>
+                                </div>
                             </td>
                         </tr>
                     }
+                    @{int n = 1;}
                     @foreach (var item in Model)
                     {
                         <tr>
+                            <td class="text-muted" style="font-size:0.75rem; width:36px;">@n</td>
                             <td class="fw-semibold">@item.NombreCompleto</td>
-                            <td>@item.FechaConfirmacion.ToString("dd/MM/yyyy")</td>
-                            <td>@(item.Padrino ?? "-")</td>
-                            <td>@(item.Obispo ?? "-")</td>
                             <td>
-                                @if (item.Libro != null) { <span class="badge bg-secondary">L:@item.Libro F:@item.Folio</span> }
+                                <span class="badge" style="background:#fef3cd; color:#7a4600; font-size:0.75rem; font-weight:600; padding:5px 10px; border-radius:8px;">
+                                    @item.FechaConfirmacion.ToString("dd/MM/yyyy")
+                                </span>
+                            </td>
+                            <td class="text-muted small">@(item.Padrino ?? "–")</td>
+                            <td class="text-muted small">@(item.Obispo ?? "–")</td>
+                            <td>
+                                @if (item.Libro != null)
+                                {
+                                    <span class="badge-book">L:@item.Libro · F:@item.Folio</span>
+                                }
+                                else { <span class="text-muted">–</span> }
                             </td>
                             <td class="text-center">
-                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-info"><i class="bi bi-eye"></i></a>
-                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-warning"><i class="bi bi-pencil"></i></a>
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-icon btn-outline-info me-1" title="Ver detalles">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-icon btn-outline-warning me-1" title="Editar">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
                                 @if (User.IsInRole("Parroco"))
                                 {
-                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-icon btn-outline-danger" title="Eliminar">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
                                 }
                             </td>
                         </tr>
+                        n++;
                     }
                 </tbody>
             </table>
         </div>
     </div>
 </div>
-<p class="text-muted mt-2 small">Total: @Model.Count() registros</p>
+<p class="text-muted mt-2 small">@Model.Count() registro(s) encontrado(s)</p>

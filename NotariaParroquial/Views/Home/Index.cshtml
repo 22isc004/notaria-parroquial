@@ -1,111 +1,298 @@
-﻿@{
+@{
     ViewData["Title"] = "Panel de Control";
+    var mesNombre = ViewData["MesNombre"]?.ToString() ?? "";
+    mesNombre = mesNombre.Length > 0 ? char.ToUpper(mesNombre[0]) + mesNombre.Substring(1) : mesNombre;
 }
 
-<h2 class="mb-4"><i class="bi bi-speedometer2"></i> Panel de Control</h2>
+<!-- Encabezado -->
+<div class="d-flex align-items-center justify-content-between mb-4">
+    <div>
+        <h2 class="page-title"><i class="bi bi-speedometer2 me-2" style="color:var(--primary);"></i>Panel de Control</h2>
+        <p class="text-muted small mb-0 mt-1">Resumen general · @DateTime.Now.ToString("dddd dd 'de' MMMM 'de' yyyy", new System.Globalization.CultureInfo("es-MX"))</p>
+    </div>
+    <div class="text-end">
+        <span class="badge rounded-pill px-3 py-2" style="background:var(--primary-light); color:var(--primary-dark); font-size:0.78rem;">
+            <i class="bi bi-person-fill me-1"></i>@User.Identity?.Name
+        </span>
+    </div>
+</div>
 
-<div class="row g-4 mb-4">
-    <div class="col-md-4">
-        <div class="card stat-card" style="border-left: 4px solid #6f42c1;">
+<!-- 4 tarjetas estadísticas con gradiente -->
+<div class="row g-3 mb-4">
+    <div class="col-sm-6 col-xl-3">
+        <div class="card stat-card-g stat-purple">
+            <i class="bi bi-droplet bg-glyph"></i>
             <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <p class="text-muted mb-1">Total Bautismos</p>
-                        <h2 class="fw-bold" style="color:#6f42c1;">@ViewData["TotalBautismos"]</h2>
-                        <small class="text-muted">Este año: @ViewData["BautismosAnio"]</small>
-                    </div>
-                    <i class="bi bi-droplet fs-1" style="color:#6f42c1; opacity:0.3;"></i>
-                </div>
-                <a asp-controller="Bautismos" asp-action="Index" class="btn btn-sm btn-outline-primary mt-2">
+                <p class="stat-label">Total Bautismos</p>
+                <div class="stat-number stat-counter">@ViewData["TotalBautismos"]</div>
+                <p class="stat-sub">Este año: <strong>@ViewData["BautismosAnio"]</strong></p>
+                <a asp-controller="Bautismos" asp-action="Index" class="btn btn-sm mt-2"
+                   style="background:rgba(255,255,255,0.18); color:#fff; border:none; font-size:0.75rem; border-radius:8px; padding:4px 12px;">
                     Ver todos <i class="bi bi-arrow-right"></i>
                 </a>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="card stat-card" style="border-left: 4px solid #e91e8c;">
+    <div class="col-sm-6 col-xl-3">
+        <div class="card stat-card-g stat-pink">
+            <i class="bi bi-heart bg-glyph"></i>
             <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <p class="text-muted mb-1">Total Matrimonios</p>
-                        <h2 class="fw-bold" style="color:#e91e8c;">@ViewData["TotalMatrimonios"]</h2>
-                        <small class="text-muted">Este año: @ViewData["MatrimoniosAnio"]</small>
-                    </div>
-                    <i class="bi bi-heart fs-1" style="color:#e91e8c; opacity:0.3;"></i>
-                </div>
-                <a asp-controller="Matrimonios" asp-action="Index" class="btn btn-sm btn-outline-danger mt-2">
+                <p class="stat-label">Total Matrimonios</p>
+                <div class="stat-number stat-counter">@ViewData["TotalMatrimonios"]</div>
+                <p class="stat-sub">Este año: <strong>@ViewData["MatrimoniosAnio"]</strong></p>
+                <a asp-controller="Matrimonios" asp-action="Index" class="btn btn-sm mt-2"
+                   style="background:rgba(255,255,255,0.18); color:#fff; border:none; font-size:0.75rem; border-radius:8px; padding:4px 12px;">
                     Ver todos <i class="bi bi-arrow-right"></i>
                 </a>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="card stat-card" style="border-left: 4px solid #f59e0b;">
+    <div class="col-sm-6 col-xl-3">
+        <div class="card stat-card-g stat-amber">
+            <i class="bi bi-star bg-glyph"></i>
             <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <p class="text-muted mb-1">Total Confirmaciones</p>
-                        <h2 class="fw-bold text-warning">@ViewData["TotalConfirmaciones"]</h2>
-                    </div>
-                    <i class="bi bi-star fs-1 text-warning" style="opacity:0.3;"></i>
-                </div>
-                <a asp-controller="Confirmaciones" asp-action="Index" class="btn btn-sm btn-outline-warning mt-2">
+                <p class="stat-label">Total Confirmaciones</p>
+                <div class="stat-number stat-counter">@ViewData["TotalConfirmaciones"]</div>
+                <p class="stat-sub">Este año: <strong>@ViewData["ConfirmacionesAnio"]</strong></p>
+                <a asp-controller="Confirmaciones" asp-action="Index" class="btn btn-sm mt-2"
+                   style="background:rgba(255,255,255,0.18); color:#fff; border:none; font-size:0.75rem; border-radius:8px; padding:4px 12px;">
                     Ver todos <i class="bi bi-arrow-right"></i>
                 </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="card stat-card-g stat-teal">
+            <i class="bi bi-calendar3 bg-glyph"></i>
+            <div class="card-body">
+                <p class="stat-label">Registros en @mesNombre</p>
+                <div class="stat-number stat-counter">@ViewData["TotalEsteMes"]</div>
+                <p class="stat-sub">Bautismos · Matrimonios · Confirmaciones</p>
+                <span class="badge mt-2" style="background:rgba(255,255,255,0.18); color:#fff; font-size:0.72rem; padding:4px 10px; border-radius:8px;">
+                    Mes actual
+                </span>
             </div>
         </div>
     </div>
 </div>
 
-<div class="row g-4">
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-header fw-semibold" style="background:#f0e6ff; color:#4a2c6d;">
-                <i class="bi bi-lightning"></i> Acciones Rápidas
+<!-- Gráficas -->
+<div class="row g-3 mb-4">
+    <div class="col-lg-8">
+        <div class="card h-100">
+            <div class="card-header-purple d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-graph-up me-2"></i>Actividad del Año @DateTime.Now.Year</span>
+                <span class="badge rounded-pill fw-normal" style="background:var(--primary); color:#fff; font-size:0.68rem;">Mensual</span>
             </div>
-            <div class="card-body">
-                <div class="d-grid gap-2">
-                    <a asp-controller="Bautismos" asp-action="Create" class="btn btn-outline-primary">
-                        <i class="bi bi-plus-circle"></i> Registrar Bautismo
-                    </a>
-                    <a asp-controller="Matrimonios" asp-action="Create" class="btn btn-outline-danger">
-                        <i class="bi bi-plus-circle"></i> Registrar Matrimonio
-                    </a>
-                    <a asp-controller="Confirmaciones" asp-action="Create" class="btn btn-outline-warning">
-                        <i class="bi bi-plus-circle"></i> Registrar Confirmación
-                    </a>
+            <div class="card-body pb-2">
+                <canvas id="actividadChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card h-100">
+            <div class="card-header-purple">
+                <i class="bi bi-pie-chart-fill me-2"></i>Distribución Total
+            </div>
+            <div class="card-body d-flex flex-column align-items-center justify-content-center gap-3">
+                <canvas id="distribucionChart" style="max-height:190px;"></canvas>
+                <div class="d-flex justify-content-around w-100 text-center">
+                    <div>
+                        <div class="fw-bold fs-5" style="color:var(--primary);">@ViewData["TotalBautismos"]</div>
+                        <small class="text-muted" style="font-size:0.72rem;">Bautismos</small>
+                    </div>
+                    <div>
+                        <div class="fw-bold fs-5" style="color:var(--pink);">@ViewData["TotalMatrimonios"]</div>
+                        <small class="text-muted" style="font-size:0.72rem;">Matrimonios</small>
+                    </div>
+                    <div>
+                        <div class="fw-bold fs-5" style="color:var(--amber);">@ViewData["TotalConfirmaciones"]</div>
+                        <small class="text-muted" style="font-size:0.72rem;">Confirmaciones</small>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-md-6">
+</div>
+
+<!-- Acciones rápidas + Sesión -->
+<div class="row g-3">
+    <div class="col-md-7">
         <div class="card">
-            <div class="card-header fw-semibold bg-secondary text-white">
-                <i class="bi bi-info-circle"></i> Sesión Actual
+            <div class="card-header-purple">
+                <i class="bi bi-lightning-charge me-2"></i>Acciones Rápidas
             </div>
             <div class="card-body">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span>Usuario</span>
-                        <span class="badge bg-primary">@User.Identity?.Name</span>
+                <div class="row g-2">
+                    <div class="col-12">
+                        <a asp-controller="Bautismos" asp-action="Create"
+                           class="btn w-100 text-start d-flex align-items-center gap-2"
+                           style="background:rgba(111,66,193,0.07); color:var(--primary-dark); border:1.5px solid rgba(111,66,193,0.12); border-radius:10px; padding:10px 16px;">
+                            <i class="bi bi-droplet-plus fs-5" style="color:var(--primary);"></i>
+                            <span class="fw-semibold">Registrar Bautismo</span>
+                        </a>
+                    </div>
+                    <div class="col-12">
+                        <a asp-controller="Matrimonios" asp-action="Create"
+                           class="btn w-100 text-start d-flex align-items-center gap-2"
+                           style="background:rgba(216,27,96,0.06); color:#7c0b40; border:1.5px solid rgba(216,27,96,0.12); border-radius:10px; padding:10px 16px;">
+                            <i class="bi bi-heart-arrow fs-5" style="color:var(--pink);"></i>
+                            <span class="fw-semibold">Registrar Matrimonio</span>
+                        </a>
+                    </div>
+                    <div class="col-12">
+                        <a asp-controller="Confirmaciones" asp-action="Create"
+                           class="btn w-100 text-start d-flex align-items-center gap-2"
+                           style="background:rgba(230,126,0,0.07); color:#7a4600; border:1.5px solid rgba(245,158,11,0.18); border-radius:10px; padding:10px 16px;">
+                            <i class="bi bi-star-fill fs-5" style="color:var(--amber);"></i>
+                            <span class="fw-semibold">Registrar Confirmación</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <div class="card h-100">
+            <div class="card-header-purple">
+                <i class="bi bi-shield-check me-2"></i>Sesión Actual
+            </div>
+            <div class="card-body p-0">
+                <ul class="list-group list-group-flush" style="border-radius:0 0 14px 14px;">
+                    <li class="list-group-item d-flex justify-content-between align-items-center px-4 py-3">
+                        <span class="text-muted small">Usuario</span>
+                        <span class="fw-semibold small">@User.Identity?.Name</span>
                     </li>
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span>Rol</span>
+                    <li class="list-group-item d-flex justify-content-between align-items-center px-4 py-3">
+                        <span class="text-muted small">Rol</span>
                         @if (User.IsInRole("Parroco"))
                         {
-                            <span class="badge" style="background-color:#6f42c1;">Párroco</span>
+                            <span class="badge px-3 py-2" style="background:linear-gradient(135deg,#6f42c1,#9c27b0); font-size:0.72rem;">Párroco</span>
                         }
                         else
                         {
-                            <span class="badge bg-secondary">Secretaria</span>
+                            <span class="badge px-3 py-2" style="background:linear-gradient(135deg,#546e7a,#78909c); font-size:0.72rem;">Secretaria</span>
                         }
                     </li>
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span>Fecha</span>
-                        <span>@DateTime.Now.ToString("dd/MM/yyyy")</span>
+                    <li class="list-group-item d-flex justify-content-between align-items-center px-4 py-3">
+                        <span class="text-muted small">Fecha</span>
+                        <span class="small fw-semibold">@DateTime.Now.ToString("dd/MM/yyyy")</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center px-4 py-3">
+                        <span class="text-muted small">Hora</span>
+                        <span class="small fw-semibold" id="reloj-hora">@DateTime.Now.ToString("HH:mm")</span>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
 </div>
+
+@section Scripts {
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script>
+(function () {
+    const meses = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+    const bData = @Html.Raw(ViewData["BautismosData"] as string ?? "[0,0,0,0,0,0,0,0,0,0,0,0]");
+    const mData = @Html.Raw(ViewData["MatrimoniosData"] as string ?? "[0,0,0,0,0,0,0,0,0,0,0,0]");
+    const cData = @Html.Raw(ViewData["ConfirmacionesData"] as string ?? "[0,0,0,0,0,0,0,0,0,0,0,0]");
+
+    function gradFn(r, g, b) {
+        return function (ctx) {
+            const { chart } = ctx;
+            const { chartArea } = chart;
+            if (!chartArea) return `rgba(${r},${g},${b},0.1)`;
+            const grad = chart.ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+            grad.addColorStop(0, `rgba(${r},${g},${b},0.40)`);
+            grad.addColorStop(1, `rgba(${r},${g},${b},0.00)`);
+            return grad;
+        };
+    }
+
+    /* ── Línea / área ── */
+    new Chart(document.getElementById('actividadChart'), {
+        type: 'line',
+        data: {
+            labels: meses,
+            datasets: [
+                { label:'Bautismos',      data:bData, borderColor:'#6f42c1', borderWidth:2.5, pointBackgroundColor:'#6f42c1', pointRadius:4, pointHoverRadius:7, tension:0.42, fill:true, backgroundColor:gradFn(111,66,193) },
+                { label:'Matrimonios',    data:mData, borderColor:'#e91e8c', borderWidth:2.5, pointBackgroundColor:'#e91e8c', pointRadius:4, pointHoverRadius:7, tension:0.42, fill:true, backgroundColor:gradFn(233,30,140) },
+                { label:'Confirmaciones', data:cData, borderColor:'#f59e0b', borderWidth:2.5, pointBackgroundColor:'#f59e0b', pointRadius:4, pointHoverRadius:7, tension:0.42, fill:true, backgroundColor:gradFn(245,158,11) }
+            ]
+        },
+        options: {
+            responsive: true,
+            animation: { duration: 900, easing: 'easeInOutQuart' },
+            interaction: { mode:'index', intersect:false },
+            plugins: {
+                legend: { position:'top', labels:{ usePointStyle:true, pointStyleWidth:10, font:{ size:12 } } },
+                tooltip: {
+                    backgroundColor:'rgba(12,6,28,0.90)', padding:12, cornerRadius:10,
+                    titleFont:{ size:13, weight:'bold' }, bodyFont:{ size:12 },
+                    callbacks: { label: i => '  ' + i.dataset.label + ': ' + i.raw }
+                }
+            },
+            scales: {
+                x: { grid:{ color:'rgba(0,0,0,0.04)' }, ticks:{ font:{ size:11 } } },
+                y: { beginAtZero:true, grid:{ color:'rgba(0,0,0,0.05)' }, ticks:{ stepSize:1, font:{ size:11 } } }
+            }
+        }
+    });
+
+    /* ── Doughnut ── */
+    const totB = @(ViewData["TotalBautismos"] ?? 0);
+    const totM = @(ViewData["TotalMatrimonios"] ?? 0);
+    const totC = @(ViewData["TotalConfirmaciones"] ?? 0);
+    const hayDatos = (totB + totM + totC) > 0;
+
+    new Chart(document.getElementById('distribucionChart'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Bautismos','Matrimonios','Confirmaciones'],
+            datasets: [{
+                data: hayDatos ? [totB,totM,totC] : [1,1,1],
+                backgroundColor: hayDatos ? ['#6f42c1','#e91e8c','#f59e0b'] : ['#e0d4f7','#fce4f4','#fef3cd'],
+                borderWidth: 0, hoverOffset: 10, borderRadius: 6
+            }]
+        },
+        options: {
+            responsive: true, cutout:'68%',
+            animation: { animateRotate:true, duration:900, easing:'easeInOutQuart' },
+            plugins: {
+                legend: { display:false },
+                tooltip: {
+                    enabled: hayDatos,
+                    backgroundColor:'rgba(12,6,28,0.90)', padding:12, cornerRadius:10,
+                    callbacks: { label: i => '  ' + i.label + ': ' + i.raw }
+                }
+            }
+        }
+    });
+
+    /* ── Counter animation ── */
+    document.querySelectorAll('.stat-counter').forEach(function (el) {
+        var target = parseInt(el.textContent.trim()) || 0;
+        if (target <= 0) return;
+        var t0 = null;
+        el.textContent = '0';
+        (function step(ts) {
+            if (!t0) t0 = ts;
+            var p = Math.min((ts - t0) / 1000, 1);
+            var ease = 1 - Math.pow(1 - p, 3);
+            el.textContent = Math.floor(ease * target);
+            if (p < 1) requestAnimationFrame(step);
+            else el.textContent = target;
+        })(performance.now());
+    });
+
+    /* ── Reloj en tiempo real ── */
+    var reloj = document.getElementById('reloj-hora');
+    if (reloj) {
+        setInterval(function () {
+            var now = new Date();
+            reloj.textContent = now.toLocaleTimeString('es-MX', { hour:'2-digit', minute:'2-digit' });
+        }, 1000);
+    }
+})();
+</script>
+}
