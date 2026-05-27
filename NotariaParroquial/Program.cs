@@ -54,7 +54,20 @@ using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     var context = services.GetRequiredService<ApplicationDbContext>();
-    context.Database.Migrate();
+
+    // Si las tablas ya existen sin historial de migraciones (deploy previo con distinto esquema),
+    // se elimina el esquema y se recrea correctamente.
+    try
+    {
+        context.Database.Migrate();
+    }
+    catch (Exception ex) when (
+        ex.ToString().Contains("42P07") ||
+        ex.ToString().Contains("already exists"))
+    {
+        context.Database.EnsureDeleted();
+        context.Database.Migrate();
+    }
 
     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
     var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
